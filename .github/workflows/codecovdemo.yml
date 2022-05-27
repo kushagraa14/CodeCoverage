@@ -1,0 +1,21 @@
+
+name: Codecov Demo
+
+on:
+  push:
+    branches:
+      main
+  pull_request:
+    branches:
+      main
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    steps:
+      - name: Test
+        uses: actions/checkout@v1
+      - name: Build and Test
+        run:  xcodebuild test -project CodecovDemo.xcodeproj -scheme CodecovDemo -destination 'platform=iOS Simulator,name=iPhone 8,OS=15.2' -enableCodeCoverage YES build test
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v1.2.1
